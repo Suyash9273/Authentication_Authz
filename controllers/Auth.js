@@ -19,7 +19,7 @@ exports.signup = async (req, res) => {
         //secure password: 
         let hashedPassword;
         try{
-            hashedPassword = bcrypt.hash(password, 10);
+            hashedPassword = await bcrypt.hash(password, 10);
         }
         catch(err){
             return res.status(500).json({
@@ -39,6 +39,10 @@ exports.signup = async (req, res) => {
         })
 
     } catch (error) {
-        
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "User cannot be registered, please try again later"
+        })
     }
 }
